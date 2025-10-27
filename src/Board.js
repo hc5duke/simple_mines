@@ -76,9 +76,18 @@ const Board = () => {
 
   return (
     <div className="board-container">
+      {status !== "playing" && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={resetGame}>
+              &times;
+            </span>
+            {status === "won" && <div className="win">You Win!</div>}
+            {status === "lost" && <div className="lost">Game Over</div>}
+          </div>
+        </div>
+      )}
       <div className="status">
-        {status === "won" && <div className="win">You Win!</div>}
-        {status === "lost" && <div className="lost">Game Over</div>}
         <button onClick={resetGame}>Reset</button>
       </div>
       <div className="board">
