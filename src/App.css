@@ -72,10 +72,9 @@ button {
     width: 30px;
     height: 30px;
     background-color: #bdbdbd;
-    border-top: 3px solid #fff;
-    border-left: 3px solid #fff;
-    border-bottom: 3px solid #7b7b7b;
-    border-right: 3px solid #7b7b7b;
+    border: 3px solid;
+    border-color: #fff #7b7b7b #7b7b7b #fff;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,5 +84,5 @@ button {
 
 .cell.revealed {
     background-color: #eee;
-    border: 1px solid #999;
+    border: 3px solid #999;
 }
