@@ -84,5 +84,13 @@ button {
 
 .cell.revealed {
     background-color: #eee;
-    border: 1px solid #aaa;
+    border: 3px solid #999;
+}
+
+.cell.debug {
+    background-color: red;
+}
+
+.debug-mode {
+    margin-top: 10px;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Cell = ({ cell, handleLeftClick, handleRightClick }) => {
+const Cell = ({ cell, debug, handleLeftClick, handleRightClick }) => {
   const displayValue = () => {
     if (!cell.revealed) {
       return cell.flagged ? "🚩" : null;
@@ -11,9 +11,11 @@ const Cell = ({ cell, handleLeftClick, handleRightClick }) => {
     return cell.value > 0 ? cell.value : null;
   };
 
+  const cellClass = `cell ${cell.revealed ? "revealed" : ""} ${debug && cell.value === "💣" ? "debug" : ""}`;
+
   return (
     <div
-      className={`cell ${cell.revealed ? "revealed" : ""}`}
+      className={cellClass}
       onClick={handleLeftClick}
       onContextMenu={handleRightClick}
     >

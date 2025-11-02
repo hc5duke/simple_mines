@@ -5,6 +5,7 @@ import { initializeBoard } from "./utils";
 const Board = () => {
   const [board, setBoard] = useState(initializeBoard(10, 10, 20));
   const [status, setStatus] = useState("playing"); // playing, won, lost
+  const [debug, setDebug] = useState(false);
 
   useEffect(() => {
     checkWinCondition();
@@ -97,6 +98,7 @@ const Board = () => {
               <Cell
                 key={colIndex}
                 cell={cell}
+                debug={debug}
                 handleLeftClick={() => handleLeftClick(rowIndex, colIndex)}
                 handleRightClick={(e) =>
                   handleRightClick(e, rowIndex, colIndex)
@@ -105,6 +107,15 @@ const Board = () => {
             ))}
           </div>
         ))}
+      </div>
+      <div className="debug-mode">
+        <input
+          type="checkbox"
+          id="debug"
+          checked={debug}
+          onChange={() => setDebug(!debug)}
+        />
+        <label htmlFor="debug">Debug Mode</label>
       </div>
     </div>
   );
