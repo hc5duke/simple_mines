@@ -14,12 +14,12 @@ const Board = () => {
     if (status !== "playing") return;
 
     const newBoard = JSON.parse(JSON.stringify(board));
-    if (newBoard[row][col].value === "X") {
+    if (newBoard[row][col].value === "💣") {
       setStatus("lost");
       // Reveal all mines
       newBoard.forEach((row) =>
         row.forEach((cell) => {
-          if (cell.value === "X") cell.revealed = true;
+          if (cell.value === "💣") cell.revealed = true;
         }),
       );
     } else {
@@ -62,7 +62,7 @@ const Board = () => {
     if (status !== "playing") return;
 
     const hasWon = board.every((row) =>
-      row.every((cell) => cell.value === "X" || cell.revealed),
+      row.every((cell) => cell.value === "💣" || cell.revealed),
     );
     if (hasWon) {
       setStatus("won");

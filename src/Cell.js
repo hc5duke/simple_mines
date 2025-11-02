@@ -3,10 +3,10 @@ import React from "react";
 const Cell = ({ cell, handleLeftClick, handleRightClick }) => {
   const displayValue = () => {
     if (!cell.revealed) {
-      return cell.flagged ? "F" : null;
+      return cell.flagged ? "🚩" : null;
     }
-    if (cell.value === "X") {
-      return "X";
+    if (cell.value === "💣") {
+      return "💣";
     }
     return cell.value > 0 ? cell.value : null;
   };
