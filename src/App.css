@@ -84,5 +84,5 @@ button {
 
 .cell.revealed {
     background-color: #eee;
-    border: 3px solid #999;
+    border: 1px solid #aaa;
 }
