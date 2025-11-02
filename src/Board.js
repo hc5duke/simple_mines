@@ -6,6 +6,7 @@ const Board = () => {
   const [board, setBoard] = useState(initializeBoard(10, 10, 20));
   const [status, setStatus] = useState("playing"); // playing, won, lost
   const [debug, setDebug] = useState(false);
+  const [isFirstClick, setIsFirstClick] = useState(true);
 
   useEffect(() => {
     checkWinCondition();
@@ -14,7 +15,25 @@ const Board = () => {
   const handleLeftClick = (row, col) => {
     if (status !== "playing") return;
 
-    const newBoard = JSON.parse(JSON.stringify(board));
+    let newBoard = JSON.parse(JSON.stringify(board));
+
+    if (isFirstClick) {
+      setIsFirstClick(false);
+      if (newBoard[row][col].value === "💣") {
+        let emptyCellFound = false;
+        while (!emptyCellFound) {
+          const newRow = Math.floor(Math.random() * 10);
+          const newCol = Math.floor(Math.random() * 10);
+          if (newBoard[newRow][newCol].value !== "💣") {
+            newBoard[newRow][newCol].value = "💣";
+            emptyCellFound = true;
+          }
+        }
+        newBoard[row][col].value = 0;
+        recalculateAdjacentMines(newBoard);
+      }
+    }
+
     if (newBoard[row][col].value === "💣") {
       setStatus("lost");
       // Reveal all mines
@@ -27,6 +46,30 @@ const Board = () => {
       revealCell(newBoard, row, col);
     }
     setBoard(newBoard);
+  };
+
+  const recalculateAdjacentMines = (board) => {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        if (board[i][j].value !== "💣") {
+          let adjacentMines = 0;
+          for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+              if (
+                i + x >= 0 &&
+                i + x < 10 &&
+                j + y >= 0 &&
+                j + y < 10 &&
+                board[i + x][j + y].value === "💣"
+              ) {
+                adjacentMines++;
+              }
+            }
+          }
+          board[i][j].value = adjacentMines;
+        }
+      }
+    }
   };
 
   const revealCell = (board, row, col) => {
@@ -73,6 +116,7 @@ const Board = () => {
   const resetGame = () => {
     setBoard(initializeBoard(10, 10, 20));
     setStatus("playing");
+    setIsFirstClick(true);
   };
 
   return (
