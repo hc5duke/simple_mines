@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Cell from "./Cell";
 import { initializeBoard } from "./utils";
+import SevenSegmentDisplay from "./SevenSegmentDisplay";
 
 const Board = () => {
   const [board, setBoard] = useState(initializeBoard(10, 10, 20));
@@ -152,7 +153,7 @@ const Board = () => {
         </div>
       )}
       <div className="status">
-        <div>Time: {timer}</div>
+        <SevenSegmentDisplay number={timer} />
         <button onClick={resetGame}>Reset</button>
       </div>
       <div className="board">
