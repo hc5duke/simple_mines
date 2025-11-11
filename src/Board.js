@@ -9,6 +9,7 @@ const Board = () => {
   const [debug, setDebug] = useState(false);
   const [isFirstClick, setIsFirstClick] = useState(true);
   const [timer, setTimer] = useState(300);
+  const [startTime, setStartTime] = useState(null);
 
   useEffect(() => {
     checkWinCondition();
@@ -17,19 +18,23 @@ const Board = () => {
   useEffect(() => {
     let interval;
     if (status === "playing") {
+      if (isFirstClick) {
+        setStartTime(Date.now());
+      }
       interval = setInterval(() => {
-        setTimer((prevTimer) => {
-          if (prevTimer <= 1) {
-            clearInterval(interval);
-            setStatus("lost");
-            return 0;
-          }
-          return prevTimer - 1;
-        });
-      }, 1000);
+        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+        const newTimer = 300 - elapsedTime;
+        if (newTimer <= 0) {
+          clearInterval(interval);
+          setStatus("lost");
+          setTimer(0);
+        } else {
+          setTimer(newTimer);
+        }
+      }, 50);
     }
     return () => clearInterval(interval);
-  }, [status]);
+  }, [status, startTime, isFirstClick]);
 
   const handleLeftClick = (row, col) => {
     if (status !== "playing" || board[row][col].flagged) return;
@@ -38,6 +43,7 @@ const Board = () => {
 
     if (isFirstClick) {
       setIsFirstClick(false);
+      setStartTime(Date.now());
       if (newBoard[row][col].value === "💣") {
         let emptyCellFound = false;
         while (!emptyCellFound) {
@@ -137,6 +143,7 @@ const Board = () => {
     setStatus("playing");
     setIsFirstClick(true);
     setTimer(300);
+    setStartTime(null);
   };
 
   const minutes = Math.floor(timer / 60);
