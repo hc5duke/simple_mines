@@ -8,7 +8,7 @@ const Board = () => {
   const [status, setStatus] = useState("playing"); // playing, won, lost
   const [debug, setDebug] = useState(false);
   const [isFirstClick, setIsFirstClick] = useState(true);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(300);
 
   useEffect(() => {
     checkWinCondition();
@@ -136,8 +136,11 @@ const Board = () => {
     setBoard(initializeBoard(10, 10, 20));
     setStatus("playing");
     setIsFirstClick(true);
-    setTimer(60);
+    setTimer(300);
   };
+
+  const minutes = Math.floor(timer / 60);
+  const seconds = timer % 60;
 
   return (
     <div className="board-container">
@@ -153,7 +156,7 @@ const Board = () => {
         </div>
       )}
       <div className="status">
-        <SevenSegmentDisplay number={timer} />
+        <SevenSegmentDisplay minutes={minutes} seconds={seconds} />
         <button onClick={resetGame}>Reset</button>
       </div>
       <div className="board">
