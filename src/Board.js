@@ -7,10 +7,28 @@ const Board = () => {
   const [status, setStatus] = useState("playing"); // playing, won, lost
   const [debug, setDebug] = useState(false);
   const [isFirstClick, setIsFirstClick] = useState(true);
+  const [timer, setTimer] = useState(60);
 
   useEffect(() => {
     checkWinCondition();
   }, [board]);
+
+  useEffect(() => {
+    let interval;
+    if (status === "playing") {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer <= 1) {
+            clearInterval(interval);
+            setStatus("lost");
+            return 0;
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [status]);
 
   const handleLeftClick = (row, col) => {
     if (status !== "playing" || board[row][col].flagged) return;
@@ -117,6 +135,7 @@ const Board = () => {
     setBoard(initializeBoard(10, 10, 20));
     setStatus("playing");
     setIsFirstClick(true);
+    setTimer(60);
   };
 
   return (
@@ -133,6 +152,7 @@ const Board = () => {
         </div>
       )}
       <div className="status">
+        <div>Time: {timer}</div>
         <button onClick={resetGame}>Reset</button>
       </div>
       <div className="board">
