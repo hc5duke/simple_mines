@@ -13,7 +13,7 @@ const Board = () => {
   }, [board]);
 
   const handleLeftClick = (row, col) => {
-    if (status !== "playing") return;
+    if (status !== "playing" || board[row][col].flagged) return;
 
     let newBoard = JSON.parse(JSON.stringify(board));
 
