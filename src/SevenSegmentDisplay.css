@@ -1,0 +1,48 @@
+.seven-segment-display {
+  display: flex;
+  align-items: center;
+  background-color: #000;
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid #333;
+}
+
+.seven-segment {
+  position: relative;
+  width: 24px; /* 0.6 * 40 */
+  height: 40px; /* 0.6 * 66.67 */
+  margin: 0 2px;
+}
+
+.segment {
+  position: absolute;
+  background-color: #320000;
+  border-radius: 2px;
+}
+
+.segment.on {
+  background-color: #ff0000;
+  box-shadow: 0 0 5px #ff0000;
+}
+
+.segment.a { top: 0; left: 4px; width: 16px; height: 4px; }
+.segment.b { top: 4px; right: 0; width: 4px; height: 16px; }
+.segment.c { bottom: 4px; right: 0; width: 4px; height: 16px; }
+.segment.d { bottom: 0; left: 4px; width: 16px; height: 4px; }
+.segment.e { bottom: 4px; left: 0; width: 4px; height: 16px; }
+.segment.f { top: 4px; left: 0; width: 4px; height: 16px; }
+.segment.g { top: 50%; left: 4px; width: 16px; height: 4px; transform: translateY(-50%); }
+
+.separator {
+  color: #ff0000;
+  font-size: 30px;
+  line-height: 40px;
+  margin: 0 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
